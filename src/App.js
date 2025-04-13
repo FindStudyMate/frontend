@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home/Home";
 import Login from "./components/Login/Login";
+import Chat from "./components/Chat/Chat";
 import {
   BrowserRouter as Router,
   Route,
@@ -12,10 +13,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-function signout() {
-  document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  window.location.replace("/");
-}
+import StudySearch from "./components/StudySearch/StudySearch";
+
 function App() {
   const [load, upadateLoad] = useState(true);
 
@@ -36,7 +35,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/StudySearch" element={<StudySearch />} />
+          <Route path="/Chat" element={<Chat />} />
           <Route path="*" element={<Navigate to="/"/>} />
+          
         </Routes>
       </div>
     </Router>

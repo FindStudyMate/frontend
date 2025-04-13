@@ -62,7 +62,6 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(password);
         const params = { email: email, password: password };
         const formattedEmail = email.replace(/\s+/g, '');
         localStorage.setItem("email", formattedEmail);

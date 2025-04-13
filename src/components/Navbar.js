@@ -19,9 +19,11 @@ function signout() {
   window.location.replace("/");
 }
 async function uploadImage() {
+  const imageUploadUrl = "http://localhost:8017/api/user/image/post";
+  const token = getCookie("token");
   const file = document.getElementById("chooseFile").files[0];
   const formData = new FormData();
-  formData.append('username', username);
+  formData.append('email', getEmailFromJWT(token));
   formData.append('image', file);
   try {
       const imageUploadResponse = await fetch(imageUploadUrl, {
@@ -30,7 +32,7 @@ async function uploadImage() {
       });
       if (imageUploadResponse.ok) {
           console.log("Image uploaded successfully");          
-          location.href = "/skatepark.co/";
+          window.location.replace("/");
       } else {
           console.error("Image upload failed");
       }
@@ -148,13 +150,37 @@ function NavBar() {
           <Nav className="ms-auto">
             {name ? (
               <>
-               <Nav.Item>
-                  <Nav.Input
-                   type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)"
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/Chat"
+                    onClick={() => updateExpanded(false)}
                   >
+                    Chat
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/StudySearch"
+                    onClick={() => updateExpanded(false)}
+                  >
+                    Studymate Search
+                  </Nav.Link>
+                </Nav.Item>
+               <Nav.Item>
+                  <label className="nav-link" htmlFor="chooseFile" style={{ cursor: "pointer" }}>
                     Upload Profile
-                  </Nav.Input>
-               </Nav.Item>
+                  </label>
+                  <input
+                    type="file"
+                    id="chooseFile"
+                    name="chooseFile"
+                    accept="image/*"
+                    style={{ display: "none" }}
+                    onChange={uploadImage}
+                  />
+                </Nav.Item>
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
